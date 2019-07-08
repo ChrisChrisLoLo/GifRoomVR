@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import ReactDOM from "react-dom";
 import * as THREE from "three";
 import DeviceOrientationControls from "../../scripts/threejs/DeviceOrientationControlsNew";
+import BasicMesh from "../../scripts/entities/BasicMesh";
 
 import "./styles/Canvas.scss";
 
@@ -52,6 +53,8 @@ export default class ThreeScene extends Component{
         this.scene.add(this.smallRoom);
         this.smallCube.position.set(0,2,0);
         this.smallRoom.position.set(-5,-5,-5);
+
+        this.object = new BasicMesh(geometry,[0,1,0],this.scene);
 
         this.start();
     }

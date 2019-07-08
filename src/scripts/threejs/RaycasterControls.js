@@ -1,12 +1,13 @@
 import {Raycaster, Vector2} from "three";
+import BasicMesh from "../entities/BasicMesh";
 
 export default class RaycasterControls{
-  constructor(camera){
+  constructor(camera,scene){
     this.camera = camera;
     this.enabled = false;
     this.raycaster = new Raycaster();
     this.mouse = new Vector2();
-
+    this.scene = scene;
 
     this.connect = this.connect.bind(this);
     this.disconnect = this.disconnect.bind(this);
@@ -25,10 +26,11 @@ export default class RaycasterControls{
     window.removeEventListener( 'mousedown', this.onMouseUp, false );
     this.enabled = false;
   };
-
+  
   onMouseDown(e){
     // calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
+
   };
 
 
