@@ -4,8 +4,6 @@ import * as THREE from "three";
 import DeviceOrientationControls from "../../scripts/threejs/DeviceOrientationControlsNew";
 
 import "./styles/Canvas.scss";
-import {Gyroscope} from "three/examples/jsm/misc/Gyroscope";
-
 
 export default class ThreeScene extends Component{
     componentDidMount(){
@@ -55,9 +53,6 @@ export default class ThreeScene extends Component{
         this.smallCube.position.set(0,2,0);
         this.smallRoom.position.set(-5,-5,-5);
 
-        //Add Gyroscope
-        //window.addEventListener("deviceorientation", this.handleOrientation, true);
-
         this.start();
     }
     componentWillUnmount(){
@@ -73,19 +68,6 @@ export default class ThreeScene extends Component{
         this.camera.updateProjectionMatrix();
         this.renderer.setSize( window.innerWidth, window.innerHeight );
     };
-
-    // handleOrientation = (e) => {
-    //     if(e.alpha === null){
-    //         return;
-    //     }
-    //     this.controls = new THREE.DeviceOrientationControls(this.camera,true);
-    //     this.controls.connect();
-    //     this.controls.update();
-    //
-    //     //element.addEventListener('click', fullscreen, false);
-    //
-    //     window.removeEventListener("deviceorientation",this.handleOrientation, true);
-    // };
 
     start = () => {
         if (!this.frameId) {
