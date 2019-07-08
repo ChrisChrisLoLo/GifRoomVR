@@ -1,6 +1,6 @@
 # GifRoomVR
 Like VR, but Worse
-###Credits
+### Credits
 Control Scheme:
 http://vr.chromeexperiments.com/
 
