@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import ReactDOM from "react-dom";
 import * as THREE from "three";
-import {PLAYER_HEIGHT,GROUND_HEIGHT} from "../../scripts/threejs/util/constants";
+import * as CONST from "../../scripts/threejs/util/constants";
 import DeviceOrientationControls from "../../scripts/threejs/DeviceOrientationControlsNew";
 import BasicMesh from "../../scripts/threejs/entities/BasicMesh";
 
@@ -14,6 +14,7 @@ export default class ThreeScene extends Component{
         const height = window.innerHeight;
         //ADD SCENE
         this.scene = new THREE.Scene();
+        this.scene.background = CONST.SCENE_COLOR;
         //ADD CAMERA
         this.camera = new THREE.PerspectiveCamera(
             75,
@@ -21,7 +22,7 @@ export default class ThreeScene extends Component{
             0.1,
             1000
         );
-        this.camera.playerHeight = PLAYER_HEIGHT;
+        this.camera.playerHeight = CONST.PLAYER_HEIGHT;
         this.camera.position.z = this.camera.playerHeight;
 
         //Array of entities that have the method update(). Called in every animation frame
@@ -61,8 +62,8 @@ export default class ThreeScene extends Component{
         this.scene.add(this.cube);
         this.scene.add(this.smallCube);
         this.scene.add(this.smallRoom);
-        this.smallCube.position.set(0,GROUND_HEIGHT,0);
-        this.smallRoom.position.set(-5,GROUND_HEIGHT-1,-5);
+        this.smallCube.position.set(0,CONST.GROUND_HEIGHT,0);
+        this.smallRoom.position.set(-5,CONST.GROUND_HEIGHT-1,-5);
 
         this.object = new BasicMesh(geometry,[0,1,0],this.scene);
 
