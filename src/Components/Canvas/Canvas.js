@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 // import ReactDOM from "react-dom";
 import * as THREE from "three";
+import {PLAYER_HEIGHT,GROUND_HEIGHT} from "../../scripts/threejs/util/constants";
 import DeviceOrientationControls from "../../scripts/threejs/DeviceOrientationControlsNew";
-import BasicMesh from "../../scripts/entities/BasicMesh";
+import BasicMesh from "../../scripts/threejs/entities/BasicMesh";
 
 import "./styles/Canvas.scss";
+import RaycasterControls from "../../scripts/threejs/RaycasterControls";
 
 export default class ThreeScene extends Component{
     componentDidMount(){
@@ -19,10 +21,15 @@ export default class ThreeScene extends Component{
             0.1,
             1000
         );
-        this.camera.position.z = 4;
-        //Add Controls
-        this.controls = new DeviceOrientationControls(this.camera);
+        this.camera.playerHeight = PLAYER_HEIGHT;
+        this.camera.position.z = this.camera.playerHeight;
 
+        //Array of entities that have the method update(). Called in every animation frame
+        this.updatableEntities = [];
+
+        //Add Controls
+        this.updatableEntities.push(new DeviceOrientationControls(this.camera));
+        this.updatableEntities.push(new RaycasterControls(this.camera,this.scene));
 
         //ADD RENDERER
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -35,7 +42,7 @@ export default class ThreeScene extends Component{
         //ADD CUBE
         const geometry = new THREE.BoxGeometry(1, 2, 1);
         const geometrySmall = new THREE.BoxGeometry(1, 1, 1);
-        const geometryRoom = new THREE.BoxGeometry(100,1,100);
+        const geometryRoom = new THREE.BoxGeometry(100,0,100);
         const cubeMaterials = [
             new THREE.MeshBasicMaterial({color:0xff0000, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
             new THREE.MeshBasicMaterial({color:0x00ff00, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
@@ -48,11 +55,14 @@ export default class ThreeScene extends Component{
         this.cube = new THREE.Mesh(geometry, cubeMaterial);
         this.smallCube = new THREE.Mesh(geometrySmall, cubeMaterial);
         this.smallRoom = new THREE.Mesh(geometryRoom,cubeMaterial);
+        //Set name so it can be referenced
+        this.smallRoom.name = "floor";
+
         this.scene.add(this.cube);
         this.scene.add(this.smallCube);
         this.scene.add(this.smallRoom);
-        this.smallCube.position.set(0,2,0);
-        this.smallRoom.position.set(-5,-5,-5);
+        this.smallCube.position.set(0,GROUND_HEIGHT,0);
+        this.smallRoom.position.set(-5,GROUND_HEIGHT-1,-5);
 
         this.object = new BasicMesh(geometry,[0,1,0],this.scene);
 
@@ -84,7 +94,12 @@ export default class ThreeScene extends Component{
         // this.cube.rotation.x += 0.01;
         // this.cube.rotation.y += 0.01;
         this.frameId = window.requestAnimationFrame(this.animate);
-        this.controls.update();
+
+        this.updatableEntities.forEach((entity)=>{
+           entity.update();
+        });
+
+        // this.controls.update();
         this.renderScene();
     };
     renderScene = () => {

@@ -1,4 +1,4 @@
-import BasicMesh from "BasicMesh";
+import BasicMesh from "src/scripts/threejs/entities/BasicMesh";
 
 export default class Cursor {
     constructor(){
@@ -7,6 +7,10 @@ export default class Cursor {
 
     createInstance(){
         this.instance = new BasicMesh();
+
     }
 
+    getInstance(){
+
+    }
 }
