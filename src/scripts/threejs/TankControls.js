@@ -2,8 +2,14 @@
 
 export default class TankControls{
     constructor(camera){
+        //Constants
+        this._FORWARD_SPEED = 0.05;
+        this._BACKWARD_SPEED = 0.025;
+        this._ROTATION_SPEED = 0.05;
+
         this.camera = camera;
         this.enabled = false;
+
         //Current direction being given
         this.direction = {forward:false,backward:false,left:false,right:false};
         // this.raycaster = new Raycaster();
@@ -14,6 +20,10 @@ export default class TankControls{
         this.disconnect = this.disconnect.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
+        this.update = this.update.bind(this);
+
+        //add event listeners
+        this.connect();
     }
 
     connect(){
@@ -30,7 +40,22 @@ export default class TankControls{
 
     update(){
         if(this.enabled){
-            
+            let angle = this.camera.rotation.y;
+            let dir = this.direction;
+            if(dir.forward){
+                this.camera.position.z -= Math.cos(angle)*this._FORWARD_SPEED;
+                this.camera.position.x -= Math.sin(angle)*this._FORWARD_SPEED;
+            }
+            if(dir.backward){
+                this.camera.position.z += Math.cos(angle)*this._BACKWARD_SPEED;
+                this.camera.position.x += Math.sin(angle)*this._BACKWARD_SPEED;
+            }
+            if(dir.left){
+                this.camera.rotation.y = angle + this._ROTATION_SPEED;
+            }
+            if(dir.right){
+                this.camera.rotation.y = angle - this._ROTATION_SPEED;
+            }
         }
     }
 

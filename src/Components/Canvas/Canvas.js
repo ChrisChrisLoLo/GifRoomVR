@@ -8,6 +8,7 @@ import Room from "../../scripts/threejs/entities/Room";
 
 import "./styles/Canvas.scss";
 import RaycasterControls from "../../scripts/threejs/RaycasterControls";
+import TankControls from "../../scripts/threejs/TankControls";
 
 export default class ThreeScene extends Component{
     componentDidMount(){
@@ -32,12 +33,15 @@ export default class ThreeScene extends Component{
         );
         this.camera.playerHeight = CONST.PLAYER_HEIGHT;
         this.camera.position.set(7,this.camera.playerHeight,0);
+        // this.camera.rotation.x = Math.PI;
         //Array of entities that have the method update(). Called in every animation frame
         this.updatableEntities = [];
 
         //Add Controls
-        this.updatableEntities.push(new DeviceOrientationControls(this.camera));
+        //this.updatableEntities.push(new DeviceOrientationControls(this.camera));
+        this.updatableEntities.push(new TankControls(this.camera));
         this.updatableEntities.push(new RaycasterControls(this.camera,this.scene));
+
 
         //ADD RENDERER
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
