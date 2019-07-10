@@ -47,13 +47,24 @@ export default class RaycasterControls{
       // update the picking ray with the camera and mouse position
 
       this.raycaster.setFromCamera(this.mouse, this.camera);
+      const innerRoom = this.scene.getObjectByName("innerRoom");
+      const outerRoom = this.scene.getObjectByName("outerRoom");
 
-      let intersects = this.raycaster.intersectObject(this.scene.getObjectByName("floor"));
+      let intersects = this.raycaster.intersectObjects([innerRoom,outerRoom]);
 
       //only take the first object that intersects with the ray, may need to change this
       if (intersects.length > 0) {
-        let point = intersects[0].point;
-        this.cursor.position.set(point.x, point.y, point.z);
+        //take the first point of intersection between the ray and the given objects
+        let intersection = intersects[0];
+        //If ray is hitting the outerRoom floor (index 7)
+        if(intersection.object.name === "outerRoom"){
+          //if ray is hitting floor
+          if(intersection.faceIndex === 6 || intersection.faceIndex === 7){
+            const point = intersection.point;
+            this.cursor.position.set(point.x, point.y, point.z);
+            console.log(intersection.faceIndex);
+          }
+        }
       }
     }
   };

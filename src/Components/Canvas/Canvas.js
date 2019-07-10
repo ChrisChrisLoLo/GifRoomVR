@@ -4,6 +4,7 @@ import * as THREE from "three";
 import * as CONST from "../../scripts/threejs/util/constants";
 import DeviceOrientationControls from "../../scripts/threejs/DeviceOrientationControlsNew";
 import BasicMesh from "../../scripts/threejs/entities/BasicMesh";
+import Room from "../../scripts/threejs/entities/Room";
 
 import "./styles/Canvas.scss";
 import RaycasterControls from "../../scripts/threejs/RaycasterControls";
@@ -15,6 +16,13 @@ export default class ThreeScene extends Component{
         //ADD SCENE
         this.scene = new THREE.Scene();
         this.scene.background = CONST.SCENE_COLOR;
+        //Add Room
+        const WALL_HEIGHT = 5;
+        const FLOOR_OFFSET = WALL_HEIGHT/2;
+        const room = new Room(new THREE.Vector3(20,WALL_HEIGHT,20),5.5);
+        room.position.set(0,FLOOR_OFFSET,0);
+        this.scene.add(room);
+
         //ADD CAMERA
         this.camera = new THREE.PerspectiveCamera(
             75,
@@ -23,8 +31,7 @@ export default class ThreeScene extends Component{
             1000
         );
         this.camera.playerHeight = CONST.PLAYER_HEIGHT;
-        this.camera.position.z = this.camera.playerHeight;
-
+        this.camera.position.set(7,this.camera.playerHeight,0);
         //Array of entities that have the method update(). Called in every animation frame
         this.updatableEntities = [];
 
@@ -43,7 +50,6 @@ export default class ThreeScene extends Component{
         //ADD CUBE
         const geometry = new THREE.BoxGeometry(1, 2, 1);
         const geometrySmall = new THREE.BoxGeometry(1, 1, 1);
-        const geometryRoom = new THREE.BoxGeometry(100,0,100);
         const cubeMaterials = [
             new THREE.MeshBasicMaterial({color:0xff0000, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
             new THREE.MeshBasicMaterial({color:0x00ff00, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
@@ -55,17 +61,12 @@ export default class ThreeScene extends Component{
         const cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
         this.cube = new THREE.Mesh(geometry, cubeMaterial);
         this.smallCube = new THREE.Mesh(geometrySmall, cubeMaterial);
-        this.smallRoom = new THREE.Mesh(geometryRoom,cubeMaterial);
-        //Set name so it can be referenced
-        this.smallRoom.name = "floor";
 
-        this.scene.add(this.cube);
+
+
         this.scene.add(this.smallCube);
-        this.scene.add(this.smallRoom);
-        this.smallCube.position.set(0,CONST.GROUND_HEIGHT,0);
-        this.smallRoom.position.set(-5,CONST.GROUND_HEIGHT-1,-5);
 
-        this.object = new BasicMesh(geometry,[0,1,0],this.scene);
+        this.smallCube.position.set(0,0,0);
 
         this.start();
     }
