@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import ReactDOM from "react-dom";
 import * as THREE from "three";
 import * as CONST from "../../scripts/threejs/util/constants";
+import * as CSS3D from "../../scripts/threejs/entities/CSS3D";
 import DeviceOrientationControls from "../../scripts/threejs/DeviceOrientationControlsNew";
 import BasicMesh from "../../scripts/threejs/entities/BasicMesh";
 import Room from "../../scripts/threejs/entities/Room";
@@ -48,6 +49,12 @@ export default class ThreeScene extends Component{
         this.renderer.setClearColor('#000000');
         this.renderer.setSize(width, height);
         this.mount.appendChild(this.renderer.domElement);
+        //Add CSS Renderer
+        this.cssRenderer = new CSS3D.CSS3DRenderer();
+        this.cssRenderer.setSize(width, height);
+        this.cssRenderer.domElement.style.position = 'absolute';
+        this.cssRenderer.domElement.style.top = 0;
+
         //Add resize event listener
         window.addEventListener("resize", this.handleResize);
 

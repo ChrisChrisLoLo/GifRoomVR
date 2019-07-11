@@ -23,16 +23,16 @@ const CSS3DObject = function ( element ) {
 };
 
 CSS3DObject.prototype = Object.create( THREE.Object3D.prototype );
-CSS3DObject.prototype.constructor = THREE.CSS3DObject;
+CSS3DObject.prototype.constructor = CSS3DObject;
 
 const CSS3DSprite = function ( element ) {
 
-  THREE.CSS3DObject.call( this, element );
+  CSS3DObject.call( this, element );
 
 };
 
-CSS3DSprite.prototype = Object.create( THREE.CSS3DObject.prototype );
-CSS3DSprite.prototype.constructor = THREE.CSS3DSprite;
+CSS3DSprite.prototype = Object.create( CSS3DObject.prototype );
+CSS3DSprite.prototype.constructor = CSS3DSprite;
 
 //
 
@@ -159,11 +159,11 @@ const CSS3DRenderer = function () {
 
   function renderObject( object, camera, cameraCSSMatrix ) {
 
-    if ( object instanceof THREE.CSS3DObject ) {
+    if ( object instanceof CSS3DObject ) {
 
       var style;
 
-      if ( object instanceof THREE.CSS3DSprite ) {
+      if ( object instanceof CSS3DSprite ) {
 
         // http://swiftcoder.wordpress.com/2008/11/25/constructing-a-billboard-matrix/
 
