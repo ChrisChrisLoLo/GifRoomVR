@@ -1,10 +1,8 @@
 import * as THREE from "three";
-import BasicBoxMesh from "./BasicBoxMesh";
 
 export default class Room extends THREE.Group{
     constructor(geometry,hallwayWidth){
         super();
-        const origin = new THREE.Vector3(0,0,0);
         this.geo = geometry;
         const roomMaterials = new THREE.MeshFaceMaterial([
             new THREE.MeshBasicMaterial({color:0xff0000, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
