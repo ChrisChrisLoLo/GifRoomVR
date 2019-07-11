@@ -10,14 +10,18 @@ import Room from "../../scripts/threejs/entities/Room";
 import "./styles/Canvas.scss";
 import RaycasterControls from "../../scripts/threejs/RaycasterControls";
 import TankControls from "../../scripts/threejs/TankControls";
+import CSSPainting from "../../scripts/threejs/entities/CSSPainting";
 
 export default class ThreeScene extends Component{
     componentDidMount(){
         const width = window.innerWidth;
         const height = window.innerHeight;
+
         //ADD SCENE
         this.scene = new THREE.Scene();
         this.scene.background = CONST.SCENE_COLOR;
+        this.sceneCSS = new THREE.Scene();
+
         //Add Room
         const WALL_HEIGHT = 5;
         const FLOOR_OFFSET = WALL_HEIGHT/2;
@@ -52,33 +56,22 @@ export default class ThreeScene extends Component{
         //Add CSS Renderer
         this.cssRenderer = new CSS3D.CSS3DRenderer();
         this.cssRenderer.setSize(width, height);
-        this.cssRenderer.domElement.style.position = 'absolute';
-        this.cssRenderer.domElement.style.top = 0;
+        this.cssRenderer.domElement.style.position = "absolute";
+        this.cssRenderer.domElement.style.top = "0";
 
         //Add resize event listener
         window.addEventListener("resize", this.handleResize);
 
-        //ADD CUBE
-        const geometry = new THREE.BoxGeometry(1, 2, 1);
-        const geometrySmall = new THREE.BoxGeometry(1, 1, 1);
-        const cubeMaterials = [
-            new THREE.MeshBasicMaterial({color:0xff0000, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color:0x00ff00, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color:0x0000ff, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color:0xffff00, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color:0xff00ff, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color:0x00ffff, transparent:true, opacity:0.8, side: THREE.DoubleSide}),
-        ];
-        const cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
-        this.cube = new THREE.Mesh(geometry, cubeMaterial);
-        this.smallCube = new THREE.Mesh(geometrySmall, cubeMaterial);
+        //Add painting
+        let painting = new CSSPainting("../../scripts/threejs/resource/demo.webp");
+        painting.position.set(0,5,0);
+        painting.getObjectByName("webgl").position.set(0,2,0);
+        painting.getObjectByName("css").position.set(0,2,0);
+        this.sceneCSS.add(painting.getObjectByName("css"));
+        this.scene.add(painting.getObjectByName("webgl"));
 
 
-
-        this.scene.add(this.smallCube);
-
-        this.smallCube.position.set(0,0,0);
-
+        //Start
         this.start();
     }
     componentWillUnmount(){
@@ -116,7 +109,8 @@ export default class ThreeScene extends Component{
         this.renderScene();
     };
     renderScene = () => {
-        this.renderer.render(this.scene, this.camera)
+        this.renderer.render(this.scene, this.camera);
+        this.cssRenderer.render(this.sceneCSS, this.camera);
     };
 
 

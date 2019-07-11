@@ -12,17 +12,22 @@ export default class CSSPainting extends THREE.Group{
     planeMesh.name = "webgl";
 
     this.add(planeMesh);
-    let gifEl = document.createElement( 'video' );
-    gifEl.setAttribute("autoplay", true);
-    gifEl.setAttribute("loop", true);
-    gifEl.src = src;
-    gifEl.width = 100;
-    gifEl.height = 100;
+    let gifEl = document.createElement( 'img' );
+    // gifEl.setAttribute("autoplay", true);
+    // gifEl.setAttribute("loop", true);
+    gifEl.onerror = function(e) {
+        "Error occured loading source"
+    };
+    gifEl.src = "https://en.wikipedia.org/wiki/GIF#/media/File:Rotating_earth_(large).gif";
+
+    // gifEl.width = 100;
+    // gifEl.height = 100;
     let gifObject = new THREE_CSS.CSS3DObject(gifEl);
     //It is important to distinguish out css object since we need to put it in a different renderer.
+    gifObject.position.set(planeMesh.position);
+    gifObject.rotation.set(planeMesh.rotation);
     gifObject.name = "css";
-    gifObject.position = planeMesh.position;
-    gifObject.rotation = planeMesh.rotation;
+
 
 
     this.add(planeMesh);
