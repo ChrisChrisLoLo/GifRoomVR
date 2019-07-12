@@ -11,6 +11,7 @@ import "./styles/Canvas.scss";
 import RaycasterControls from "../../scripts/threejs/RaycasterControls";
 import TankControls from "../../scripts/threejs/TankControls";
 import CSSPainting from "../../scripts/threejs/entities/CSSPainting";
+import mp4 from "../../scripts/threejs/entities/test.mp4";
 
 export default class ThreeScene extends Component{
     componentDidMount(){
@@ -53,22 +54,37 @@ export default class ThreeScene extends Component{
         this.renderer.setClearColor('#000000');
         this.renderer.setSize(width, height);
         this.mount.appendChild(this.renderer.domElement);
-        //Add CSS Renderer
-        this.cssRenderer = new CSS3D.CSS3DRenderer();
-        this.cssRenderer.setSize(width, height);
-        this.cssRenderer.domElement.style.position = "absolute";
-        this.cssRenderer.domElement.style.top = "0";
 
         //Add resize event listener
         window.addEventListener("resize", this.handleResize);
 
-        //Add painting
         let painting = new CSSPainting("../../scripts/threejs/resource/demo.webp");
         painting.position.set(0,5,0);
         painting.getObjectByName("webgl").position.set(0,2,0);
-        painting.getObjectByName("css").position.set(0,2,0);
-        this.sceneCSS.add(painting.getObjectByName("css"));
         this.scene.add(painting.getObjectByName("webgl"));
+
+
+        //TEST
+        // let gifEl = document.createElement( 'video' );
+        // gifEl.setAttribute("autoplay", true);
+        // gifEl.setAttribute("loop", true);
+        // gifEl.onerror = function(e) {
+        //     "Error occured loading source"
+        // };
+        // gifEl.src = mp4;
+        //
+        // // gifEl.width = 100;
+        // // gifEl.height = 100;
+        // let vidTexture1 = new THREE.VideoTexture(gifEl);
+        // let material1 = new THREE.MeshBasicMaterial({map:vidTexture1});
+        //
+        //
+        //
+        // let geometry1 = new THREE.BoxGeometry(10,10,10);
+        // let planeMesh1= new THREE.Mesh( geometry1, material1 );
+        //
+        // this.scene.add(planeMesh1);
+        //ENDTEST
 
 
         //Start
@@ -110,7 +126,6 @@ export default class ThreeScene extends Component{
     };
     renderScene = () => {
         this.renderer.render(this.scene, this.camera);
-        this.cssRenderer.render(this.sceneCSS, this.camera);
     };
 
 
