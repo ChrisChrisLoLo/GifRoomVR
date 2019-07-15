@@ -20,3 +20,13 @@ export default class Room extends THREE.Group{
         this.add(innerRoomGeo);
     }
 }
+
+class roomDimensions {
+    constructor(height,innerWidth,innerLength,outerWidth,outerLength) {
+        this.height = height;
+        this.innerWidth = innerWidth;
+        this.innerLength = innerLength;
+        this.outerWidth = outerWidth;
+        this.outerLength = outerLength;
+    }
+}
