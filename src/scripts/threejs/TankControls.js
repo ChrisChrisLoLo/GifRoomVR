@@ -63,15 +63,19 @@ export default class TankControls{
         let dir = this.direction;
         switch(e.keyCode){
             case 38:
+            case 87:
                 dir.forward = true;
                 break;
             case 40:
+            case 83:
                 dir.backward = true;
                 break;
             case 37:
+            case 65:
                 dir.left = true;
                 break;
             case 39:
+            case 68:
                 dir.right = true;
                 break;
             default:
@@ -87,15 +91,19 @@ export default class TankControls{
         let dir = this.direction;
         switch(e.keyCode) {
             case 38:
+            case 87:
                 dir.forward = false;
                 break;
             case 40:
+            case 83:
                 dir.backward = false;
                 break;
             case 37:
+            case 65:
                 dir.left = false;
                 break;
             case 39:
+            case 68:
                 dir.right = false;
                 break;
             default:

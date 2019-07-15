@@ -44,7 +44,7 @@ export default class ThreeScene extends Component{
         this.updatableEntities = [];
 
         //Add Controls
-        //this.updatableEntities.push(new DeviceOrientationControls(this.camera));
+        this.updatableEntities.push(new DeviceOrientationControls(this.camera));
         this.updatableEntities.push(new TankControls(this.camera));
         this.updatableEntities.push(new RaycasterControls(this.camera,this.scene));
 
@@ -58,10 +58,9 @@ export default class ThreeScene extends Component{
         //Add resize event listener
         window.addEventListener("resize", this.handleResize);
 
-        let painting = new CSSPainting("../../scripts/threejs/resource/demo.webp");
-        painting.position.set(0,5,0);
-        painting.getObjectByName("webgl").position.set(0,2,0);
-        this.scene.add(painting.getObjectByName("webgl"));
+        let painting = new CSSPainting("./test.mp4");
+        painting.position.set(0,1,0);
+        this.scene.add(painting);
 
 
         //TEST
