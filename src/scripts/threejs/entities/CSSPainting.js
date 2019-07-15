@@ -7,8 +7,8 @@ export default class CSSPainting extends THREE.Group{
 
     let scope = this;
 
-    const MAX_GROUP_HEIGHT = 3;
-    const MAX_GROUP_WIDTH = 3;
+    const MAX_GROUP_HEIGHT = 2.5;
+    const MAX_GROUP_WIDTH = 2.5;
     const FRAME_WIDTH = 0.1;
 
     const MAX_VIDEO_HEIGHT = MAX_GROUP_HEIGHT-(2*FRAME_WIDTH);
@@ -21,7 +21,7 @@ export default class CSSPainting extends THREE.Group{
     vidEl.setAttribute("muted", true);
     vidEl.setAttribute("crossorigin", "anonymous");
     vidEl.onerror = function(evt) {
-        "Error occured loading source"
+        console.error("Error occured loading source");
     };
 
 
@@ -56,27 +56,27 @@ export default class CSSPainting extends THREE.Group{
 
     vidEl.src = src;
 
-    //Create material
-    const vidTexture = new THREE.VideoTexture(this);
-    const material = new THREE.MeshBasicMaterial({map:vidTexture});
-
-    //Create video geometry. Need to scale it properly to prevent stretching
-    let videoWidth;
-    let videoHeight;
-    console.log([this.videoWidth,this.videoHeight]);
-
-    if(this.videoWidth >= this.videoHeight){
-      videoWidth = MAX_VIDEO_WIDTH;
-      videoHeight = MAX_VIDEO_HEIGHT * (this.videoHeight/this.videoWidth);
-    }
-    else if (this.videoHeight > this.videoWidth){
-      videoWidth = MAX_VIDEO_WIDTH * (this.videoWidth/this.videoHeight);
-      videoHeight = MAX_VIDEO_HEIGHT;
-    }
-    let vidGeo = new THREE.BoxGeometry(videoWidth,videoHeight,0.1);
-    let vidMesh= new THREE.Mesh( vidGeo, material );
-
-    scope.add(vidMesh);
+    // //Create material
+    // const vidTexture = new THREE.VideoTexture(this);
+    // const material = new THREE.MeshBasicMaterial({map:vidTexture});
+    //
+    // //Create video geometry. Need to scale it properly to prevent stretching
+    // let videoWidth;
+    // let videoHeight;
+    // console.log([this.videoWidth,this.videoHeight]);
+    //
+    // if(this.videoWidth >= this.videoHeight){
+    //   videoWidth = MAX_VIDEO_WIDTH;
+    //   videoHeight = MAX_VIDEO_HEIGHT * (this.videoHeight/this.videoWidth);
+    // }
+    // else if (this.videoHeight > this.videoWidth){
+    //   videoWidth = MAX_VIDEO_WIDTH * (this.videoWidth/this.videoHeight);
+    //   videoHeight = MAX_VIDEO_HEIGHT;
+    // }
+    // let vidGeo = new THREE.BoxGeometry(videoWidth,videoHeight,0.1);
+    // let vidMesh= new THREE.Mesh( vidGeo, material );
+    //
+    // scope.add(vidMesh);
 
   }
 }
