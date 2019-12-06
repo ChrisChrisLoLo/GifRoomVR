@@ -90,7 +90,9 @@ let DeviceOrientationControls = function ( object ) {
 
     let device = scope.deviceOrientation;
 
-    if ( device ) {
+    let isNonEmptyObject = !(Object.keys(device).length === 0 && device.constructor === Object);
+
+    if ( device && isNonEmptyObject) {
 
       let alpha = device.alpha ? _Math.degToRad( device.alpha ) + scope.alphaOffset : 0; // Z
 
@@ -103,7 +105,6 @@ let DeviceOrientationControls = function ( object ) {
       setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
 
     }
-
 
   };
 

@@ -44,7 +44,7 @@ export default class ThreeScene extends Component{
         this.updatableEntities = [];
 
         //Add Controls
-        //this.updatableEntities.push(new DeviceOrientationControls(this.camera));
+        this.updatableEntities.push(new DeviceOrientationControls(this.camera));
         this.updatableEntities.push(new TankControls(this.camera));
         this.updatableEntities.push(new RaycasterControls(this.camera,this.scene));
 
